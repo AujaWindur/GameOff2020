@@ -8,7 +8,7 @@ public class Orbit : MonoBehaviour
     public Vector3 RotationAxis = Vector3.up;
     public float Speed = 10f;
 
-    void Update()
+    void FixedUpdate()
     {
         var lastRotation = transform.rotation;
         transform.RotateAround(OrbitTarget.transform.position, RotationAxis.normalized, Speed * Time.deltaTime);
