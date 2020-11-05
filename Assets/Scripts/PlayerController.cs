@@ -15,9 +15,9 @@ public class PlayerController : MonoBehaviour
   [SerializeField] private GameObject clubPrefab;
   [SerializeField] private ControllerState state;
   [SerializeField] private GolfShotDebugGUI golfShotDebugGUI;
+  [SerializeField] private BallDirectionVisualizer ballDirectionVisualizer;
 #pragma warning restore CS0649
   private GolfBall ball;
-  private Vector3 cameraOffset;
   private Transform cameraTransform;
   private CameraManager cameraManager;
 
@@ -34,7 +34,6 @@ public class PlayerController : MonoBehaviour
     ball = Instantiate (ballPrefab).GetComponent<GolfBall> ();
     ball.Reset (transform.position, BallSpawnOffset);
     cameraTransform = Camera.main.transform;
-    cameraOffset = cameraTransform.localPosition;
     cameraManager = GetComponent<CameraManager> ();
     SetState (ControllerState.HittingBall);
   }
@@ -51,9 +50,14 @@ public class PlayerController : MonoBehaviour
       else if (Input.GetMouseButtonDown (0))
       {
         //Should only take rotation on Z axis into account, and X axis should be based on HitForce, or static
-        ball.Hit (cameraTransform.forward * HitForce);
+        ball.Hit (GetHitDirection () * HitForce);
         golfShotDebugGUI.LastShot = HitForce.ToString ();
         SetState (ControllerState.WaitingForBallToLand);
+      }
+
+      else
+      {
+        ballDirectionVisualizer.UpdateDirection (ball.transform.position, ball.Radius, GetHitDirection ());
       }
     }
     else if (State == ControllerState.SpectatingWhileBallIsResting)
@@ -85,6 +89,11 @@ public class PlayerController : MonoBehaviour
     }
   }
 
+  private Vector3 GetHitDirection()
+  {
+    return cameraTransform.forward;
+  }
+
   private void SetState(ControllerState newState)
   {
     if (state == newState)
@@ -111,6 +120,15 @@ public class PlayerController : MonoBehaviour
     else if (newState == ControllerState.HittingBall && cameraManager.IsFlying)
     {
       cameraManager.EndFly ();
+    }
+
+    if (newState == ControllerState.HittingBall)
+    {
+      ballDirectionVisualizer.Show ();
+    }
+    else if (ballDirectionVisualizer.Showing)
+    {
+      ballDirectionVisualizer.Hide ();
     }
 
     state = newState;

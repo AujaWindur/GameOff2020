@@ -3,8 +3,10 @@
 public class GolfBall : MonoBehaviour
 {
   public BallState State { get; private set; }
+  public float Radius => collider.radius;
 
   private new Rigidbody rigidbody;
+  private new SphereCollider collider;
 
   public enum BallState
   {
@@ -19,6 +21,7 @@ public class GolfBall : MonoBehaviour
   private void Awake()
   {
     rigidbody = GetComponent<Rigidbody> ();
+    collider = GetComponent<SphereCollider> ();
   }
 
   private void FixedUpdate()

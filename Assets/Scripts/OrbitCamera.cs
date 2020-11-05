@@ -65,7 +65,7 @@ public class OrbitCamera : MonoBehaviour
     transform.localRotation = Quaternion.Euler (orbitAngles);
   }
 
-  void LateUpdate()
+  void Update()
   {
     focusPoint = focus.position + focusOffset;
     Quaternion lookRotation;
