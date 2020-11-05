@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
   private GolfBall ball;
   private Vector3 cameraOffset;
   private Transform cameraTransform;
-  private CameraController cameraController;
+  private CameraManager cameraManager;
 
   public enum ControllerState
   {
@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour
     ball.Reset (transform.position, BallSpawnOffset);
     cameraTransform = Camera.main.transform;
     cameraOffset = cameraTransform.localPosition;
-    cameraController = GetComponent<CameraController> ();
+    cameraManager = GetComponent<CameraManager> ();
     SetState (ControllerState.HittingBall);
   }
 
@@ -104,13 +104,13 @@ public class PlayerController : MonoBehaviour
     }
 
     if ((newState == ControllerState.SpectatingWhileBallIsResting || newState == ControllerState.WaitingForBallToLand)
-      && !cameraController.IsFlying)
+      && !cameraManager.IsFlying)
     {
-      cameraController.Fly ();
+      cameraManager.Fly ();
     }
-    else if (newState == ControllerState.HittingBall && cameraController.IsFlying)
+    else if (newState == ControllerState.HittingBall && cameraManager.IsFlying)
     {
-      cameraController.EndFly (transform.position + cameraOffset);
+      cameraManager.EndFly (transform.position + cameraOffset);
     }
 
     state = newState;

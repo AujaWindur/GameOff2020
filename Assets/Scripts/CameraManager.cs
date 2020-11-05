@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class CameraController : MonoBehaviour
+public class CameraManager : MonoBehaviour
 {
   public bool IsFlying { get; private set; }
   private FlyCamera flyCamera;
