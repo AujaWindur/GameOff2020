@@ -7,7 +7,6 @@ public class PlayerController : MonoBehaviour
 {
   public ControllerState State => state;
 
-  public Vector3 StartPosition;
   public float BallSpawnOffset;
   public float HitForce;
 
@@ -16,6 +15,7 @@ public class PlayerController : MonoBehaviour
   [SerializeField] private GameObject clubPrefab;
   [SerializeField] private CameraController cameraController;
   [SerializeField] private ControllerState state;
+  [SerializeField] private GolfShotDebugGUI golfShotDebugGUI;
 #pragma warning restore CS0649
   private GolfBall ball;
   private Vector3 cameraOffset;
@@ -30,10 +30,10 @@ public class PlayerController : MonoBehaviour
 
   private void Awake()
   {
-    transform.position = StartPosition + new Vector3 (0f, ballPrefab.GetComponent<SphereCollider> ().radius);
+    //transform.position = StartPosition + new Vector3 (0f, ballPrefab.GetComponent<SphereCollider> ().radius);
 
     ball = Instantiate (ballPrefab).GetComponent<GolfBall> ();
-    ball.Reset (transform, StartPosition, BallSpawnOffset);
+    ball.Reset (transform, transform.position, BallSpawnOffset);
     camera = cameraController.transform;
     cameraOffset = camera.localPosition;
   }
@@ -46,16 +46,15 @@ public class PlayerController : MonoBehaviour
       {
         state = ControllerState.SpectatingWhileBallIsResting;
         cameraController.Fly ();
-        return;
       }
 
-      if (Input.GetMouseButtonDown (0))
+      else if (Input.GetMouseButtonDown (0))
       {
         //Should only take rotation on Z axis into account, and X axis should be based on HitForce, or static
         ball.Hit (camera.forward * HitForce);
+        golfShotDebugGUI.LastShot = HitForce.ToString ();
         cameraController.Fly ();
         state = ControllerState.WaitingForBallToLand;
-        return;
       }
     }
     else if (State == ControllerState.SpectatingWhileBallIsResting)
@@ -64,8 +63,14 @@ public class PlayerController : MonoBehaviour
       {
         state = ControllerState.HittingBall;
         cameraController.EndFly (transform.position + cameraOffset);
-        return;
       }
+      else if (Input.GetButtonDown ("ResetBall"))
+      {
+        state = ControllerState.HittingBall;
+        ball.Reset (transform, transform.position, BallSpawnOffset);
+        cameraController.EndFly (transform.position + cameraOffset);
+      }
+
     }
     else if (State == ControllerState.WaitingForBallToLand)
     {
@@ -74,6 +79,12 @@ public class PlayerController : MonoBehaviour
         transform.position = ball.transform.position;
         cameraController.EndFly (transform.position + cameraOffset);
         ball.Reset (transform, ball.transform.position, BallSpawnOffset);
+        state = ControllerState.HittingBall;
+      }
+      else if (Input.GetButtonDown ("ResetBall"))
+      {
+        ball.Reset (transform, transform.position, BallSpawnOffset);
+        cameraController.EndFly (transform.position + cameraOffset);
         state = ControllerState.HittingBall;
       }
     }
