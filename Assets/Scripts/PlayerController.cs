@@ -110,7 +110,7 @@ public class PlayerController : MonoBehaviour
     }
     else if (newState == ControllerState.HittingBall && cameraManager.IsFlying)
     {
-      cameraManager.EndFly (transform.position + cameraOffset);
+      cameraManager.EndFly ();
     }
 
     state = newState;

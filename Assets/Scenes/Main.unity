@@ -453,7 +453,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   focus: {fileID: 1677371368}
   distance: 5
-  focusRadius: 5
+  focusRadius: 0
   focusCentering: 0.5
   rotationSpeed: 360
   minVerticalAngle: -89

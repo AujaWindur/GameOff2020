@@ -16,17 +16,17 @@ public class CameraManager : MonoBehaviour
 
   public void Fly()
   {
-    orbitCamera.enabled = false;
+    orbitCamera.Activated = false;
     flyCamera.enabled = true;
     flyCamera.Fly ();
     IsFlying = true;
   }
 
-  public void EndFly(Vector3 position)
+  public void EndFly()
   {
-    flyCamera.EndFly (position);
+    flyCamera.EndFly ();
     flyCamera.enabled = false;
-    orbitCamera.enabled = true;
+    orbitCamera.Activated = true;
     IsFlying = false;
   }
 

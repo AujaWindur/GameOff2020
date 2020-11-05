@@ -157,11 +157,8 @@ public class FlyCamera : MonoBehaviour
     flying = true;
   }
 
-  public void EndFly(Vector3 position)
+  public void EndFly()
   {
     flying = false;
-    m_TargetCameraState.x = position.x;
-    m_TargetCameraState.z = position.z;
-    m_TargetCameraState.y = position.y;
   }
 }
