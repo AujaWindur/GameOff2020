@@ -17,7 +17,7 @@ public class OrbitCamera : MonoBehaviour {
 	[SerializeField, Range(0f, 1f)]
 	float focusCentering = 0.5f;
 
-	[SerializeField, Range(1f, 360f)]
+	[SerializeField, Range(1f, 1000f)]
 	float rotationSpeed = 90f;
 
 	[SerializeField, Range(-89f, 89f)]
@@ -31,6 +31,9 @@ public class OrbitCamera : MonoBehaviour {
 
 	[SerializeField]
 	LayerMask obstructionMask = -1;
+
+	[SerializeField] private bool invertVertical;
+	[SerializeField] private Vector3 focusOffset;
 
 	Camera regularCamera;
 
@@ -60,7 +63,7 @@ public class OrbitCamera : MonoBehaviour {
 
 	void Awake () {
 		regularCamera = GetComponent<Camera>();
-		focusPoint = focus.position;
+		focusPoint = focus.position + focusOffset;
 		transform.localRotation = Quaternion.Euler(orbitAngles);
 	}
 
@@ -80,7 +83,7 @@ public class OrbitCamera : MonoBehaviour {
 
 		Vector3 rectOffset = lookDirection * regularCamera.nearClipPlane;
 		Vector3 rectPosition = lookPosition + rectOffset;
-		Vector3 castFrom = focus.position;
+		Vector3 castFrom = focus.position + focusOffset;
 		Vector3 castLine = rectPosition - castFrom;
 		float castDistance = castLine.magnitude;
 		Vector3 castDirection = castLine / castDistance;
@@ -98,7 +101,7 @@ public class OrbitCamera : MonoBehaviour {
 
 	void UpdateFocusPoint () {
 		previousFocusPoint = focusPoint;
-		Vector3 targetPoint = focus.position;
+		Vector3 targetPoint = focus.position + focusOffset;
 		if (focusRadius > 0f) {
 			float distance = Vector3.Distance(targetPoint, focusPoint);
 			float t = 1f;
@@ -117,9 +120,12 @@ public class OrbitCamera : MonoBehaviour {
 
 	bool ManualRotation () {
 		Vector2 input = new Vector2(
-			Input.GetAxis("Mouse Y"),
+			-Input.GetAxis("Mouse Y"),
 			Input.GetAxis("Mouse X")
 		);
+		if (invertVertical) {
+			input.y = -input.y;
+		}
 		const float e = 0.001f;
 		if (input.x < -e || input.x > e || input.y < -e || input.y > e) {
 			orbitAngles += rotationSpeed * Time.unscaledDeltaTime * input;

@@ -161,11 +161,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 765716522}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.6245556, y: 10.462207, z: 65.98518}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &789574205
 GameObject:
@@ -278,7 +278,7 @@ Transform:
   m_LocalScale: {x: 100, y: 1, z: 100}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1076682261
 GameObject:
@@ -293,6 +293,7 @@ GameObject:
   - component: {fileID: 1076682262}
   - component: {fileID: 1076682265}
   - component: {fileID: 1076682266}
+  - component: {fileID: 1076682267}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -362,8 +363,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 2.492, z: -4.583}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1677371368}
-  m_RootOrder: 0
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1076682265
 MonoBehaviour:
@@ -404,7 +405,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1076682261}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8cd98689075ff2a47b5f440eb4932f3f, type: 3}
   m_Name: 
@@ -438,6 +439,32 @@ MonoBehaviour:
     m_RotationOrder: 4
   rotationLerpTime: 0.01
   invertY: 0
+--- !u!114 &1076682267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1076682261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa09c02a044980b40b16c32cdfd035c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  focus: {fileID: 1677371368}
+  distance: 5
+  focusRadius: 5
+  focusCentering: 0.5
+  rotationSpeed: 360
+  minVerticalAngle: -89
+  maxVerticalAngle: 89
+  alignDelay: 5
+  alignSmoothRange: 45
+  obstructionMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  invertVertical: 0
+  focusOffset: {x: 0, y: 3, z: 0}
 --- !u!1 &1677371367
 GameObject:
   m_ObjectHideFlags: 0
@@ -448,6 +475,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1677371368}
   - component: {fileID: 1677371369}
+  - component: {fileID: 1677371370}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -465,8 +493,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1076682264}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -482,14 +509,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdb2f7adb334f2c4392ab5fd71e15409, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartPosition: {x: 0, y: 0, z: 0}
   BallSpawnOffset: 1
   HitForce: 25
   ballPrefab: {fileID: 9099685988150974731, guid: b9affeaee91c53a4c9da147d3e698751, type: 3}
   clubPrefab: {fileID: 1799746403058899486, guid: ce2b65cee38ee5b479bf006f6a0e0add, type: 3}
-  cameraController: {fileID: 1076682266}
   state: 0
   golfShotDebugGUI: {fileID: 765716523}
+--- !u!114 &1677371370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1677371367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b6d11bb2e18fc7419eee5532954442d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2114680223
 GameObject:
   m_ObjectHideFlags: 0
@@ -581,5 +618,5 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}

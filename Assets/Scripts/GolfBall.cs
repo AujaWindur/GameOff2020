@@ -34,18 +34,17 @@ public class GolfBall : MonoBehaviour
     }
   }
 
-  public void Reset(Transform parent, Vector3 position, float heightOffset)
+  public void Reset(Vector3 position, float heightOffset)
   {
-    transform.SetParent (parent);
     transform.position = position + new Vector3 (0f, heightOffset);
     State = BallState.FallingToRest;
+    rigidbody.velocity = Vector3.zero;
     rigidbody.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
     rigidbody.useGravity = true;
   }
 
   public void Hit(Vector3 force)
   {
-    transform.SetParent (null);
     rigidbody.constraints = RigidbodyConstraints.None;
     rigidbody.useGravity = true;
     rigidbody.velocity = force;
