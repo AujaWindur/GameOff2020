@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BallDirectionVisualizer : MonoBehaviour
 {
@@ -16,7 +14,6 @@ public class BallDirectionVisualizer : MonoBehaviour
   public void UpdateDirection(Vector3 position, float radius, Vector3 direction)
   {
     transform.position = position + new Vector3 (0f, -radius);
-    Debug.Log (direction);
     transform.rotation = Quaternion.LookRotation (direction);
   }
 
